@@ -10,6 +10,8 @@ services:
     ports:
       - "15432:5432"
     environment:
+      - POSTGRES_DB=bobik-motivator
+      - POSTGRES_USER=server
       - POSTGRES_PASSWORD=postgres
     networks:
       - bobik
