@@ -37,17 +37,17 @@ const Sidebar = () => {
 			</div>
 			<div className='block add'>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'achievements'}>
+					<Link className={styles.alink} to={'formcreatedeal'}>
 						Создать сделку
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'products'}>
+					<Link className={styles.alink} to={'formaddclient'}>
 						Добавить клиента
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'clients'}>
+					<Link className={styles.alink} to={'helpinfo'}>
 						Справка о доходе
 					</Link>
 				</div>
