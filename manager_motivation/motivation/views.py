@@ -6,6 +6,10 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
+from .models import Roles, Employee, Clients, Product, Deals
+from .serializer import RolesSerializer, EmployeeSerializer, ClientsSerializer, ProductSerializer, DealsSerializer
+from rest_framework import generics
+
 
 class Profile(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -74,3 +78,58 @@ class LogoutAPIView(APIView):
 
         return Response({'success': 'Выход успешен'}, status=status.HTTP_200_OK)
     
+
+class RolesAPIView(generics.ListAPIView):
+    queryset = Roles.objects.all()
+    serializer_class = RolesSerializer
+
+class EmployeeAPIView(generics.ListAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+class ClientsAPIView(generics.ListAPIView):
+    queryset = Clients.objects.all()
+    serializer_class = ClientsSerializer
+
+class ProductAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class DealsAPIView(generics.ListAPIView):
+    queryset = Deals.objects.all()
+    serializer_class = DealsSerializer
+
+
+""" from django.db.models import Sum, Count, F, FloatField, Max, ExpressionWrapper
+
+# Собираем данные о продажах: сумма продаж и количество транзакций
+sales_data = (
+    Deals.objects.values("employee_id")
+    .annotate(
+        total_sales=Sum("sale_amount"),
+        total_transactions=Count("id")
+    )
+)
+
+# Находим максимальные значения для нормализации
+max_sales = sales_data.aggregate(max_sales=Max("total_sales"))["max_sales"]
+max_transactions = sales_data.aggregate(max_transactions=Max("total_transactions"))["max_transactions"]
+
+# Нормализуем данные и рассчитываем рейтинг
+ranked_data = (
+    sales_data.annotate(
+        normalized_sales=ExpressionWrapper(
+            F("total_sales") / max_sales,
+            output_field=FloatField()
+        ),
+        normalized_transactions=ExpressionWrapper(
+            F("total_transactions") / max_transactions,
+            output_field=FloatField()
+        ),
+        rating=ExpressionWrapper(
+            (F("normalized_sales") + F("normalized_transactions")) / 2,
+            output_field=FloatField()
+        )
+    )
+    .order_by("-rating")
+) """

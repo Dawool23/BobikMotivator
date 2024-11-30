@@ -22,7 +22,7 @@ class Roles(models.Model):
         verbose_name_plural = 'Роли'
 
     def __str__(self):
-        return f"{self.name} {self.fillial}"
+        return self.name
     
 class Employee(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
@@ -36,7 +36,8 @@ class Employee(models.Model):
         verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
-        return str(f"{self.fio} | {self.id_roles}")
+        #return str(f"{self.fio} | {self.id_roles}")
+        return self.fio
     
 class Clients(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
@@ -48,19 +49,20 @@ class Clients(models.Model):
         verbose_name_plural = 'Клиенты'
 
     def __str__(self):
-        return f"{self.name}"
+        #return f"{self.name}"
+        return self.name
     
 class Product(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
     name = models.CharField(max_length=50, db_column='name', verbose_name='Название товара')
-    price = MoneyField(max_digits=12, decimal_places=2, default_currency='RUB', db_column='price', verbose_name='Стоимость')
+    price = models.DecimalField(max_digits=12, decimal_places=2, db_column='price', verbose_name='Стоимость', default=0.00)
     percent = models.DecimalField(max_digits=4, 
                                   decimal_places=3, 
                                   validators=[
                                       MaxValueValidator(1.000),  # Максимальное значение
                                       MinValueValidator(0.000),  # Минимальное значение
                                       ],
-                                      db_column='percent', verbose_name='Процент')
+                                      db_column='percent', verbose_name='Процент', default=0.000)
     description = models.CharField(max_length=300, db_column='description', verbose_name='Описание', null=True, blank=True)
 
     class Meta:
@@ -69,7 +71,8 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
     def __str__(self):
-        return f"{self.name} | Стоимость: {self.price}"
+        #return f"{self.name} | Стоимость: {self.price}"
+        return self.name
 
 class Deals(models.Model):
     STATUS_CHOICES = [
@@ -90,7 +93,7 @@ class Deals(models.Model):
     date =  models.DateTimeField(db_column='date', verbose_name='Дата', default=datetime.now)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE, db_column='product_id', verbose_name='Товар')
     payment_type = models.CharField(max_length=50, choices=PAYMENT_TYPE_CHOICES, db_column='payment_type', verbose_name='Тип оплаты', default='Наличные')
-    sum = MoneyField(max_digits=12, decimal_places=2, default_currency='RUB', db_column='sum', verbose_name='Сумма')
+    sum =  models.DecimalField(max_digits=12, decimal_places=2, db_column='sum', verbose_name='Сумма', default=0.00)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, db_column='status', verbose_name='Статус', default='Не завершено')
 
     class Meta:
@@ -99,4 +102,4 @@ class Deals(models.Model):
         verbose_name_plural = 'Сделки'
 
     def __str__(self):
-        return f"Сделка {self.id}: {self.client_id} - {self.product_id} ({self.status})"
+        return f"Сделка {self.id}: {self.client_id} - {self.product_id} ({self.status} {self.sum})"
