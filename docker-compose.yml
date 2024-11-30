@@ -4,6 +4,29 @@ networks:
   bobik:
 
 services:
+  motivation-frontend:
+    container_name: motivation-frontend
+    build:
+      context: ./bobik-motivation-front
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - motivation-backend
+    networks:
+      - bobik
+
+  motivation-backend:
+    container_name: motivation-backend
+    build:
+      context: ./manager_motivation
+      dockerfile: Dockerfile
+    command: python manage.py runserver localhost:8000
+    ports:
+      - "1488:8000"
+    networks:
+      - bobik
+  
   postgres:
     image: postgres:16.6-alpine
     restart: unless-stopped
