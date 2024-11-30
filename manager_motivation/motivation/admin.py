@@ -1,7 +1,19 @@
 from django.contrib import admin
 from django.conf import settings
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
 
+# Разрегистрация стандартной модели User
+admin.site.unregister(User)
+
+# Повторная регистрация модели User с настройками
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'is_staff', 'date_joined')  # Поля для отображения
+    list_filter = ('date_joined',)  # Фильтры
+    ordering = ('-date_joined',)  # Сортировка
+    readonly_fields = ('date_joined',)  # Поле только для чтения
 class RolesAdmin(admin.ModelAdmin):
     list_display = (
         'id',

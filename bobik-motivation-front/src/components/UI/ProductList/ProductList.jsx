@@ -1,52 +1,42 @@
 import React from 'react';
-import styles from './SalesHistory.module.css';
+import styles from './ProductList.module.css';
 
-const SalesHistory = () => {
+const ProductList = () => {
 	const holder = [
 		{
 			id: 1,
 			name: 'BMW 840d xDrive',
-			client: 'Степанов Кирилл Валерьевич',
-			date: '01.01.2024',
+			description: 'Состояние: Новое',
 			sum: '₽10,000,000',
 		},
 		{
 			id: 2,
 			name: 'Toyota Camry XV80',
-			client: 'Моторин Сергей Викторович',
-			date: '17.06.2024',
+			description: 'Состояние: Новое',
 			sum: '₽4,000,000',
 		},
 		{
 			id: 3,
 			name: 'Mercedes-AMG G63',
-			client: 'Жилин Александр Анатольевич',
-			date: '29.11.2024',
+			description: 'Состояние: Новое',
 			sum: '₽40,000,000',
-		},
-		{
-			id: 4,
-			name: 'Hyundai Sonata DN8',
-			client: 'Волков Александр Максимович',
-			date: '30.06.2024',
-			sum: '₽2,400,000',
 		},
 	];
 	const keys = Object.keys(holder[0]);
 
 	return (
 		<div className={styles.historyContainer}>
-			<h2 className={styles.title}>История сделок</h2>
+			<h2 className={styles.title}>Наличие товара</h2>
 			<table className={styles.table}>
 				<thead>
-					<tr>
+					<tr className={styles.bar}>
 						<th>id</th>
 						<th>Наименование</th>
-						<th>Клиент</th>
-						<th>Дата</th>
+						<th>Описание</th>
 						<th>Сумма</th>
 					</tr>
 				</thead>
+
 				<tbody>
 					{holder.map((holder, index) => (
 						<tr key={index}>
@@ -61,4 +51,4 @@ const SalesHistory = () => {
 	);
 };
 
-export default SalesHistory;
+export default ProductList;

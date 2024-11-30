@@ -1,9 +1,9 @@
-export default function Products() {
-	async function getSales() {}
+import ProductList from '../components/UI/ProductList/ProductList';
 
+export default function Products() {
 	return (
-		<div>
-			<h1>Товары</h1>
+		<div className='main-holder'>
+			<ProductList />
 		</div>
 	);
 }
