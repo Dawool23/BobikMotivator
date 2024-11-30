@@ -51,7 +51,7 @@ const SalesHistory = () => {
 					{holder.map((holder, index) => (
 						<tr key={index}>
 							{keys.map(key => (
-								<td>{holder[key]}</td>
+								<td key={`${index}-${key}`}>{holder[key]}</td>
 							))}
 						</tr>
 					))}
