@@ -21,7 +21,7 @@ services:
     build:
       context: ./manager_motivation
       dockerfile: Dockerfile
-    command: python manage.py runserver localhost:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./manager_motivation/:/code:delegated
     ports:
