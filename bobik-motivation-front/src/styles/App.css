@@ -1,0 +1,105 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+/* Общий контейнер сетки */
+.grid-container {
+	display: grid;
+	grid-template-rows: 80px auto; /* 80px для Header, остальное для контента */
+	grid-template-columns: 250px auto; /* 250px для Sidebar, остальное для Content */
+	grid-template-areas:
+		'header header'
+		'sidebar content';
+	height: 100vh; /* Высота окна браузера */
+	background-color: #f5f5f5; /* Фон для всей страницы */
+}
+
+/* Стили для Header */
+.header {
+	grid-area: header;
+	background-color: #3a77b5;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 24px;
+	font-weight: bold;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для Sidebar */
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 0; /* Убираем промежутки между блоками */
+	height: 100%;
+	background-color: #fdfdfd; /* Темный фон */
+	color: black;
+	box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Блоки в сайдбаре */
+.block {
+	flex: 1; /* Равномерное распределение пространства */
+	display: flex;
+	flex-direction: column;
+	justify-content: center; /* Центровка контента по вертикали */
+	align-items: center; /* Центровка контента по горизонтали */
+	padding: 20px; /* Внутренние отступы */
+	background-color: #fafcfd; /* Фон каждого блока */
+}
+
+.nav {
+	flex: 0.5;
+}
+
+.exit {
+	flex: 0.2;
+}
+
+.add {
+	justify-content: left;
+}
+
+.exitButton {
+	padding: 5px 20px;
+}
+
+.exitButton :hover {
+	background-color: #1f34f1;
+	cursor: pointer;
+}
+
+/* Граница между блоками */
+.block:not(:last-child) {
+	border-bottom: 1px solid #bdc3c7; /* Линия между блоками */
+}
+
+/* Текстовые стили */
+.block h3 {
+	margin: 0 0 10px 0; /* Отступы сверху и снизу */
+	font-size: 18px;
+}
+
+.block p {
+	margin: 0;
+	font-size: 14px;
+	color: #ecf0f1; /* Светлый текст */
+}
+
+/* Стили для Content */
+.content {
+	grid-area: content;
+	background-color: #e1e1e1; /* Белый фон */
+	padding: 20px;
+	overflow-y: auto;
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+	border-radius: 10px;
+}
+
+.achievements h1 {
+	margin-top: 0;
+}

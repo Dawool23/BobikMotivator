@@ -1,0 +1,96 @@
+/* Основной контейнер для выравнивания формы */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #4a90e2; /* Синий фон */
+  }
+  
+  /* Стили формы */
+  .form {
+    max-width: 400px; /* Ширина формы */
+    width: 100%;
+    margin: 0 auto; /* Центровка по горизонтали */
+    background: #ffffff; /* Белый фон */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень формы */
+    padding: 30px 20px; /* Внутренние отступы */
+    text-align: center; /* Текст по центру */
+  }
+  
+  /* Заголовок формы */
+  .headAuthorization {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+  }
+  
+  /* Контейнер для каждого инпута */
+  .inputContainer {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  /* Инпуты */
+  .input {
+    width: 100%; /* Растягиваем инпуты на всю ширину */
+    padding: 12px 10px; /* Внутренние отступы */
+    border: 1px solid #ccc; /* Граница инпута */
+    border-radius: 5px; /* Скругленные углы */
+    font-size: 16px;
+    outline: none; /* Убираем обводку */
+    background-color: #f9f9f9; /* Светлый фон */
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .input:focus {
+    border-color: #3498db; /* Синий цвет границы при фокусе */
+  }
+  
+  /* Метка (label) */
+  .label {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    font-size: 14px;
+    color: #aaa;
+    transition: all 0.2s ease; /* Анимация для плавного перехода */
+    pointer-events: none;
+  }
+  
+  .input:focus + .label,
+  .input:not(:placeholder-shown) + .label {
+    top: -16px;
+    left: 5px;
+    font-size: 12px;
+    color: #3498db; /* Синий цвет при активном поле */
+  }
+  
+  /* Кнопка входа */
+  .button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db; /* Синий фон */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Анимация для эффекта наведения */
+  }
+  
+  .button:hover {
+    background: #2878c2; /* Темнее при наведении */
+  }
+  
+  .errorMessage {
+    color: red !important;
+    font-size: 0.875rem !important;
+    margin-top: 0.25rem !important;
+    font-weight: normal !important;
+ /*    text-align: left !important; */
+}

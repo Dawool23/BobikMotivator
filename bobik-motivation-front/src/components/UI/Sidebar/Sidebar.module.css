@@ -1,0 +1,33 @@
+.link {
+	display: block;
+	width: 90%;
+	height: 20%;
+	margin: 5px 0px;
+}
+
+.mlink {
+	display: block;
+	width: 90%;
+	height: 10%;
+	margin: 5px 0px;
+}
+
+.alink {
+	padding: 10px 5px;
+	display: block;
+	color: black;
+	text-decoration: none;
+}
+
+.link :hover,
+.mlink :hover {
+	background-color: #bdbdbd;
+	border: gray solid 1px;
+}
+
+.link :focus,
+.mlink :focus {
+	background-color: #6f00ff;
+	color: white;
+	border: gray solid 1px;
+}

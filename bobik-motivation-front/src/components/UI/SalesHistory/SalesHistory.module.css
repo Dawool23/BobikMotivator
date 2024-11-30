@@ -1,0 +1,40 @@
+.historyContainer {
+	background: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+	margin-bottom: 20px;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th,
+.table td {
+	text-align: left;
+	padding: 10px;
+}
+
+.table tbody tr:nth-child(odd) {
+	background: #f9f9f9;
+}
+
+.completed {
+	color: #2ecc71;
+	font-weight: bold;
+}
+
+.canceled {
+	color: #e74c3c;
+	font-weight: bold;
+}
+
+.processing {
+	color: #f39c12;
+	font-weight: bold;
+}
