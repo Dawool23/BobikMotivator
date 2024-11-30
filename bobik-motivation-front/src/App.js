@@ -10,50 +10,26 @@ import { AuthContext } from './context';
 import Login from './pages/Login';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('auth'))
-  return (
-    <AuthContext.Provider value={{
-      isAuth,
-      setIsAuth
-    }}>
-      <BrowserRouter>
-        {
-          isAuth ? (
-            <div className="grid-container">
-              <Header />
-              <Content />
-              <Sidebar />
-            </div>
-          ) : <Login />
-        }
-      </BrowserRouter>
-    </AuthContext.Provider>
-  );
-};
+	const [isAuth, setIsAuth] = useState(localStorage.getItem('auth'));
+	return (
+		<AuthContext.Provider
+			value={{
+				isAuth,
+				setIsAuth,
+			}}>
+			<BrowserRouter>
+				{isAuth ? (
+					<div className='grid-container'>
+						<Header />
+						<Content />
+						<Sidebar />
+					</div>
+				) : (
+					<Login />
+				)}
+			</BrowserRouter>
+		</AuthContext.Provider>
+	);
+}
 
 export default App;
-
-/* function App() {
-  const [isAuth, setIsAuth] = useState(false)
-  return (
-    <AuthContext.Provider value={{
-      isAuth,
-      setIsAuth
-    }}>
-      <BrowserRouter>
-        {
-          isAuth ? (
-            <div className="grid-container">
-              <Header />
-              <Content />
-              <Navbar />
-              <Sidebar />
-            </div>
-          ) : <Content />
-        }
-      </BrowserRouter>
-    </AuthContext.Provider>
-  );
-};
-
-export default App; */

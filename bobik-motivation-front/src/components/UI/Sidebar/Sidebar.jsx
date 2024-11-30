@@ -10,13 +10,13 @@ const Sidebar = () => {
 
 	useEffect(() => {
 		const url = location.pathname;
-		const segments = url.split('/').filter(segment => segment.length > 0);
+		const segments = url.split('/').filter((segment) => segment.length > 0);
 		const lastSegment =
 			segments.length > 0 ? segments[segments.length - 1] : '';
 		setLastUrlSegment(lastSegment);
-	}, location);
+	}, [location]);
 
-	const exit = event => {
+	const exit = (event) => {
 		event.preventDefault();
 		setIsAuth(false);
 		localStorage.setItem('auth', 'false');
@@ -28,33 +28,30 @@ const Sidebar = () => {
 				<div className={styles.link}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'achievements' ? styles.active : ''
+							lastUrlSegment === 'achievements' ? styles.active : ''
 						}`}
 						to={'achievements'}
-						onClick={() => setLastUrlSegment('achievements')}
-					>
+						onClick={() => setLastUrlSegment('achievements')}>
 						Достижения
 					</Link>
 				</div>
 				<div className={styles.link}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'products' ? styles.active : ''
+							lastUrlSegment === 'products' ? styles.active : ''
 						}`}
 						to={'products'}
-						onClick={() => setLastUrlSegment('products')}
-					>
+						onClick={() => setLastUrlSegment('products')}>
 						Товары
 					</Link>
 				</div>
 				<div className={styles.link}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'clients' ? styles.active : ''
+							lastUrlSegment === 'clients' ? styles.active : ''
 						}`}
 						to={'clients'}
-						onClick={() => setLastUrlSegment('clients')}
-					>
+						onClick={() => setLastUrlSegment('clients')}>
 						Клиенты
 					</Link>
 				</div>
@@ -66,28 +63,27 @@ const Sidebar = () => {
 							lastUrlSegment == 'formcreatedeal' ? styles.active : ''
 						}`}
 						to={'formcreatedeal'}
-						onClick={() => setLastUrlSegment('formcreatedeal')}
-					>
+						onClick={() => setLastUrlSegment('formcreatedeal')}>
 						Создать сделку
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={`${styles.alink} ${
+					<Link
+						className={`${styles.alink} ${
 							lastUrlSegment == 'formaddclient' ? styles.active : ''
 						}`}
 						to={'formaddclient'}
-						onClick={() => setLastUrlSegment('formaddclient')}
-					>
+						onClick={() => setLastUrlSegment('formaddclient')}>
 						Добавить клиента
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={`${styles.alink} ${
+					<Link
+						className={`${styles.alink} ${
 							lastUrlSegment == 'helpinfo' ? styles.active : ''
 						}`}
 						to={'helpinfo'}
-						onClick={() => setLastUrlSegment('helpinfo')}
-					>
+						onClick={() => setLastUrlSegment('helpinfo')}>
 						Справка о доходе
 					</Link>
 				</div>

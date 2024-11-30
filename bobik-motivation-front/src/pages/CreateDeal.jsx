@@ -5,7 +5,7 @@ const CreateDeal = () => {
 	return (
 		<div>
 			<h1>Создание сделки</h1>
-            <FormCreateDeal/>
+			<FormCreateDeal />
 		</div>
 	);
 };

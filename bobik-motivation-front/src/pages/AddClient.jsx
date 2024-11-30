@@ -5,7 +5,7 @@ const AddClientForm = () => {
 	return (
 		<div>
 			<h1>Добавить клиента</h1>
-            <FormAddClient/>
+			<FormAddClient />
 		</div>
 	);
 };

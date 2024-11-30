@@ -32,8 +32,8 @@ const ClientList = () => {
 				<tbody>
 					{holder.map((holder, index) => (
 						<tr key={index}>
-							{keys.map(key => (
-								<td>{holder[key]}</td>
+							{keys.map((key) => (
+								<td key={`${index}-${key}`}>{holder[key]}</td>
 							))}
 						</tr>
 					))}
