@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -70,6 +71,17 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     
 ]
+
+ASGI_APPLICATION = 'motivation.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],  # Адрес Redis-сервера
+        },
+    },
+}
 
 REST_FRAMEFORK = {
     'DEFAULT_PERMISSION_CLASSES': [
