@@ -83,9 +83,11 @@ const Sidebar = () => {
 				</div>
 			</div>
 			<div className='block exit'>
-				<button className='exitButton' onClick={exit}>
-					Выйти
-				</button>
+				<div className='exitButton'>
+					<button className='aExitBut' onClick={exit}>
+						Выйти
+					</button>
+				</div>
 			</div>
 		</div>
 	);
