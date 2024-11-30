@@ -1,9 +1,12 @@
+import SalesHistory from '../components/UI/SalesHistory/SalesHistory';
+
 export default function Products() {
 	async function getSales() {}
 
 	return (
-		<div>
-			<h1>Товары</h1>
+		<div className='mainholder'>
+			<h1 className='title'>Товары</h1>
+			<SalesHistory />
 		</div>
 	);
 }

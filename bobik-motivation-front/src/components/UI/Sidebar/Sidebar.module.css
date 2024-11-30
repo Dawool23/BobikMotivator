@@ -25,9 +25,7 @@
 	border: gray solid 1px;
 }
 
-.link :focus,
 .link .active,
-.mlink :focus,
 .mlink .active {
 	background-color: #6f00ff;
 	color: white;
