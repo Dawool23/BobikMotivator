@@ -1,22 +1,50 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './ClientList.module.css';
+import AuthContext from '../../../context/AuthContext';
+import { fetchData } from '../../../API/API';
 
 const ClientList = () => {
-	const holder = [
-		{
-			id: 1,
-			name: 'Жилин Александр Анатольевич',
-		},
-		{
-			id: 2,
-			name: 'Моторин Сергей Викторович',
-		},
-		{
-			id: 3,
-			name: 'Ботвинков Антон Владимирович',
-		},
-	];
-	const keys = Object.keys(holder[0]);
+	const { authTokens } = useContext(AuthContext);
+	const [clients, setClients] = useState([]);
+
+/* 	useEffect(() => {
+		const fetchClients = async () => {
+			try {
+				const response = await axios.get(
+					process.env.REACT_APP_API_URL + '/api/clients',
+					{
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${authTokens?.access}`,
+						},
+					}
+				);
+				setClients(response.data); // Сохраняем данные клиентов
+			} catch (error) {
+				console.error('Ошибка при загрузке данных сотрудника:', error);
+			}
+		};
+
+		fetchClients();
+	}, []); */
+
+	useEffect(() => {
+		const fetchClients = async () => {
+		  if (!authTokens) return; // Если нет токенов, не делаем запрос
+	
+		  try {
+			// Получаем данные клиентов через API
+			const data = await fetchData('/api/clients', authTokens.access);
+			setClients(data); // Устанавливаем данные клиентов
+		  } catch (error) {
+			console.error('Ошибка при загрузке данных клиентов:', error);
+		  }
+		};
+	
+		fetchClients();
+	  }, [authTokens]);
+
+	const keys = clients.length > 0 ? Object.keys(clients[0]) : null;
 
 	return (
 		<div className={styles.historyContainer}>
@@ -30,10 +58,10 @@ const ClientList = () => {
 				</thead>
 
 				<tbody>
-					{holder.map((holder, index) => (
+					{clients.map((holder, index) => (
 						<tr key={index}>
-							{keys.map(key => (
-								<td>{holder[key]}</td>
+							{keys.map((key) => (
+								<td key={`${index}-${key}`}>{holder[key]}</td>
 							))}
 						</tr>
 					))}

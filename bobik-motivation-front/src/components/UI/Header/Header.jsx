@@ -1,29 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useContext } from 'react';
 import AuthContext from '../../../context/AuthContext';
+import { fetchData } from '../../../API/API';
+/* import { getEmployeeData } from '../../../API/API'; */
 
 const Header = () => {
-	const [currentDate, setCurrentDate] = useState(
-		new Date().toLocaleString('ru-RU', {
-			day: '2-digit',
-			month: 'long',
-			year: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit',
-		})
-	);
-
 	
-	const [employee, setEmployee] = useState(null); // Данные о сотруднике
+/* 	const [employee, setEmployee] = useState(null); // Данные о сотруднике
 	const { tokens } = useContext(AuthContext);
 
 	useEffect(() => {
-	/* 	const tokens = localStorage.getItem('authTokens'); */
-	/* 	const access = tokens['access'];
+		const tokens = localStorage.getItem('authTokens');
+	 	const access = tokens['access'];
 		console.log(tokens);
-		console.log(access); */
+		console.log(access); 
 		
 		// Запрос данных сотрудника
 		const fetchEmployee = async () => {
@@ -42,23 +32,61 @@ const Header = () => {
 		};
 
 		fetchEmployee();
-	}, []);
+	}, []); */
 
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			setCurrentDate(
-				new Date().toLocaleString('ru-RU', {
-					day: '2-digit',
-					month: 'long',
-					year: 'numeric',
-					hour: '2-digit',
-					minute: '2-digit',
-				})
-			);
-		}, 5000); // 20 секунд
 
-		return () => clearInterval(intervalId);
-	}, []);
+/*	
+	const [employee, setEmployee] = useState(null); // Данные о сотруднике
+	const { authTokens } = useContext(AuthContext);
+	console.log(authTokens);
+	
+ 	useEffect(() => {
+
+		const fetchEmployee = async () => {
+		  try {
+			const response = await axios.get(process.env.REACT_APP_API_URL + '/api/employee', {
+			  headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${authTokens?.access}`,  
+			  },
+			});
+
+			console.log('Response data:', response.data);  
+	
+			
+			const employee = response.data.find(emp => emp.id_roles === 'Менеджер');
+			setEmployee(employee); 
+		  } catch (error) {
+			console.error('Ошибка при загрузке данных сотрудника:', error);
+		  }
+		};
+	
+		if (authTokens) {
+		  fetchEmployee(); 
+		}
+	  }, [authTokens]); */
+
+	  const { authTokens } = useContext(AuthContext); // Получаем токены из контекста
+	  const [employee, setEmployee] = useState(null); // Состояние для данных сотрудника
+
+	  useEffect(() => {
+		const fetchEmployee = async () => {
+		  if (!authTokens) return; // Если нет токенов, не делаем запрос
+	
+		  try {
+			// Получаем данные о сотруднике через API
+			const employeeData = await fetchData('/api/employee', authTokens.access);
+	
+			// Находим сотрудника с ролью "Менеджер"
+			const employee = employeeData.find(emp => emp.id_roles === 'Менеджер');
+			setEmployee(employee); // Устанавливаем данные сотрудника
+		  } catch (error) {
+			console.error('Ошибка при загрузке данных сотрудника:', error);
+		  }
+		};
+	
+		fetchEmployee(); // Вызываем функцию для получения данных
+	  }, [authTokens]); // Эффект зависит от authTokens
 
 
 	return (
@@ -68,7 +96,7 @@ const Header = () => {
 				<span className='track'>Track</span>
 			</div>
 			<div className='information'>
-				<span className='name'>{employee ? employee.fio?.split(' ')[0] : 'Загрузка...'}</span>
+				<span className='name'>{employee ? (employee.fio ? employee.fio.split(' ')[0] : 'Без имени') : 'Загрузка...'}</span>
 				<span className='role'>{employee ? employee.id_roles : '...'}</span>
 			</div>
 		</div>

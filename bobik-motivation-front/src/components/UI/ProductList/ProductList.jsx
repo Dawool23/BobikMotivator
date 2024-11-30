@@ -1,28 +1,50 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './ProductList.module.css';
+import AuthContext from '../../../context/AuthContext';
+import { fetchData } from '../../../API/API';
 
 const ProductList = () => {
-	const holder = [
-		{
-			id: 1,
-			name: 'BMW 840d xDrive',
-			description: 'Состояние: Новое',
-			sum: '₽10,000,000',
-		},
-		{
-			id: 2,
-			name: 'Toyota Camry XV80',
-			description: 'Состояние: Новое',
-			sum: '₽4,000,000',
-		},
-		{
-			id: 3,
-			name: 'Mercedes-AMG G63',
-			description: 'Состояние: Новое',
-			sum: '₽40,000,000',
-		},
-	];
-	const keys = Object.keys(holder[0]);
+	const { authTokens } = useContext(AuthContext);
+	const [products, setProducts] = useState([]);
+
+/* 	useEffect(() => {
+		const fetchProducts = async () => {
+			try {
+				const response = await axios.get(
+					process.env.REACT_APP_API_URL + '/api/product',
+					{
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${authTokens?.access}`,
+						},
+					}
+				);
+				setProducts(response.data); // Сохраняем товары
+			} catch (error) {
+				console.error('Ошибка при загрузке данных сотрудника:', error);
+			}
+		};
+
+		fetchProducts();
+	}, []); */
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+		  if (!authTokens) return; // Если нет токенов, не делаем запрос
+	
+		  try {
+			// Получаем данные продуктов через API
+			const data = await fetchData('/api/product', authTokens.access);
+			setProducts(data); // Устанавливаем данные продуктов
+		  } catch (error) {
+			console.error('Ошибка при загрузке данных продуктов:', error);
+		  }
+		};
+	
+		fetchProducts();
+	  }, [authTokens]);
+
+	const keys = products.length > 0 ? Object.keys(products[0]) : null;
 
 	return (
 		<div className={styles.historyContainer}>
@@ -32,15 +54,16 @@ const ProductList = () => {
 					<tr className={styles.bar}>
 						<th>id</th>
 						<th>Наименование</th>
-						<th>Описание</th>
 						<th>Сумма</th>
+						<th>Коэффициент</th>
+						<th>Описание</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					{holder.map((holder, index) => (
+					{products.map((holder, index) => (
 						<tr key={index}>
-							{keys.map(key => (
+							{keys.map((key) => (
 								<td>{holder[key]}</td>
 							))}
 						</tr>

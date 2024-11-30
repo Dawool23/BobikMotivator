@@ -5,7 +5,7 @@ import styles from './Sidebar.module.css';
 import AuthContext from '../../../context/AuthContext';
 
 const Sidebar = () => {
-	const { isAuth, setIsAuth } = useContext(AuthContext);
+	const { setIsAuth } = useContext(AuthContext);
 	const [lastUrlSegment, setLastUrlSegment] = useState();
 	const location = useLocation();
 
@@ -15,7 +15,7 @@ const Sidebar = () => {
 		const lastSegment =
 			segments.length > 0 ? segments[segments.length - 1] : '';
 		setLastUrlSegment(lastSegment);
-	}, location);
+	}, [location]);
 
 	const exit = event => {
 		event.preventDefault();
@@ -29,7 +29,7 @@ const Sidebar = () => {
 				<div className={styles.link}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'achievements' ? styles.active : ''
+							lastUrlSegment === 'achievements' ? styles.active : ''
 						}`}
 						to={'achievements'}
 						onClick={() => setLastUrlSegment('achievements')}
@@ -40,7 +40,7 @@ const Sidebar = () => {
 				<div className={styles.link}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'products' ? styles.active : ''
+							lastUrlSegment === 'products' ? styles.active : ''
 						}`}
 						to={'products'}
 						onClick={() => setLastUrlSegment('products')}
@@ -51,7 +51,7 @@ const Sidebar = () => {
 				<div className={styles.link}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'clients' ? styles.active : ''
+							lastUrlSegment === 'clients' ? styles.active : ''
 						}`}
 						to={'clients'}
 						onClick={() => setLastUrlSegment('clients')}
@@ -64,7 +64,7 @@ const Sidebar = () => {
 				<div className={styles.mlink}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'formcreatedeal' ? styles.active : ''
+							lastUrlSegment === 'formcreatedeal' ? styles.active : ''
 						}`}
 						to={'formcreatedeal'}
 						onClick={() => setLastUrlSegment('formcreatedeal')}
@@ -74,7 +74,7 @@ const Sidebar = () => {
 				</div>
 				<div className={styles.mlink}>
 					<Link className={`${styles.alink} ${
-							lastUrlSegment == 'formaddclient' ? styles.active : ''
+							lastUrlSegment === 'formaddclient' ? styles.active : ''
 						}`}
 						to={'formaddclient'}
 						onClick={() => setLastUrlSegment('formaddclient')}
@@ -84,7 +84,7 @@ const Sidebar = () => {
 				</div>
 				<div className={styles.mlink}>
 					<Link className={`${styles.alink} ${
-							lastUrlSegment == 'helpinfo' ? styles.active : ''
+							lastUrlSegment === 'helpinfo' ? styles.active : ''
 						}`}
 						to={'helpinfo'}
 						onClick={() => setLastUrlSegment('helpinfo')}

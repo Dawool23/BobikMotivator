@@ -1,30 +1,58 @@
 import axios from 'axios';
 
-// Получаем базовый URL API из переменной окружения
 const API_URL = process.env.REACT_APP_API_URL;
 
-// Функция для авторизации
-export const login = (username, password) => {
-    return axios.post(`${API_URL}/login/`, { username, password });
-};
+// Базовая конфигурация axios
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL, // Базовый URL из .env
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-// Функция для выхода из системы
-export const logout = (refreshToken) => {
-    return axios.post(`${API_URL}/logout/`, { refresh_token: refreshToken });
-};
-
-// Функция для обновления токенов
-export const updateTokens = () => {
-    return axios.post(`${API_URL}/token/refresh/`, {
-        refresh: localStorage.getItem('refreshToken'),
+// Функция для выполнения POST-запроса на логин
+export const loginUser = async (username, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/login`, {
+      username,
+      password,
     });
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при авторизации:", error);
+    throw error;
+  }
 };
 
-// Запрос с токеном авторизации
-export const fetchWithToken = (url) => {
-    return axios.get(`${API_URL}${url}`, {
+
+// Универсальная функция для выполнения запросов
+export const fetchData = async (endpoint, authToken) => {
+    try {
+      const response = await apiClient.get(endpoint, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${authToken}`,
         },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Ошибка при загрузке данных с ${endpoint}:`, error);
+      throw error;
+    }
+  };
+
+
+
+/* export const fetchData = async (url, authToken) => {
+  try {
+    const response = await axios.get(process.env.REACT_APP_API_URL + url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
     });
-};
+    return response.data;
+  } catch (error) {
+    console.error(`Ошибка при загрузке данных с ${url}:`, error);
+    throw error; 
+  }
+}; */
