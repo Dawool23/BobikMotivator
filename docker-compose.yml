@@ -10,7 +10,7 @@ services:
       context: ./bobik-motivation-front
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       - motivation-backend
     networks:
@@ -22,8 +22,10 @@ services:
       context: ./manager_motivation
       dockerfile: Dockerfile
     command: python manage.py runserver localhost:8000
+    volumes:
+      - ./manager_motivation/:/code:delegated
     ports:
-      - "1488:8000"
+      - "8080:8000"
     networks:
       - bobik
   
