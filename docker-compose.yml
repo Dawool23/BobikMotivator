@@ -42,3 +42,11 @@ services:
       - ./database/data:/var/lib/postgresql/data
     networks:
       - bobik
+
+  motivation-redis:
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - "16379:6379"
+    networks:
+      - bobik
