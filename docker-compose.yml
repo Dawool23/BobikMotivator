@@ -20,6 +20,7 @@ services:
 
   motivation-backend:
     container_name: motivation-backend
+    restart: unless-stopped
     build:
       context: ./manager_motivation
       dockerfile: Dockerfile
