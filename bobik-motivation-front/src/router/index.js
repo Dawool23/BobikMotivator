@@ -9,11 +9,13 @@ import Achievements from '../pages/Achievements';
 import Login from '../pages/Login';
 import Clients from '../pages/Clients';
 import Products from '../pages/Products';
+import AddSale from '../pages/AddSale';
 
 export const privateRoutes = [
 	{ path: '/achievements', element: <Achievements />, exact: true },
 	{ path: '/clients', element: <Clients />, exact: true },
 	{ path: '/products', element: <Products />, exact: true },
+	{ path: '/addsale', element: <AddSale />, exact: true },
 ];
 
 export const publicRoutes = [

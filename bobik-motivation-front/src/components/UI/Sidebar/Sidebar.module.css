@@ -3,6 +3,7 @@
 	width: 90%;
 	height: 20%;
 	margin: 5px 0px;
+	border: white solid 1px;
 }
 
 .mlink {
@@ -10,10 +11,12 @@
 	width: 90%;
 	height: 10%;
 	margin: 5px 0px;
+	border: white solid 1px;
 }
 
 .alink {
-	padding: 10px 5px;
+	box-sizing: border-box;
+	padding: 7px 5px;
 	display: block;
 	color: black;
 	text-decoration: none;

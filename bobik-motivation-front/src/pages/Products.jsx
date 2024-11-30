@@ -4,7 +4,7 @@ export default function Products() {
 	async function getSales() {}
 
 	return (
-		<div className='mainholder'>
+		<div className='main-holder'>
 			<h1 className='title'>Товары</h1>
 			<SalesHistory />
 		</div>

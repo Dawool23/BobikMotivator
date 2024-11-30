@@ -61,7 +61,13 @@ const Sidebar = () => {
 			</div>
 			<div className='block add'>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'achievements'}>
+					<Link
+						className={`${styles.alink} ${
+							lastUrlSegment == 'addsale' ? styles.active : ''
+						}`}
+						to={'addsale'}
+						onClick={() => setLastUrlSegment('addsale')}
+					>
 						Создать сделку
 					</Link>
 				</div>
