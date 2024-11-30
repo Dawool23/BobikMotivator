@@ -2,12 +2,19 @@ from django.db import models
 from django.conf import settings
 from djmoney.models.fields import MoneyField
 from datetime import datetime
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Roles(models.Model):
+    ROLES_CHOICES = [
+        ('Менеджер', 'Менеджер'),
+        ('Директор филиала', 'Директор филиала'),
+        ('Генеральный директор', 'Генеральный директор'),
+    ]
+
     id = models.AutoField(primary_key=True, db_column='id')
-    name = models.CharField(max_length=50, db_column='name', verbose_name='Название роли')
-    fillial = models.CharField(max_length=50, db_column='fillial', verbose_name='Филлиал')
+    name = models.CharField(max_length=50, choices=ROLES_CHOICES, db_column='name', verbose_name='Название роли')
+    fillial = models.CharField(max_length=50, db_column='fillial', verbose_name='Филлиал', null=True, blank=True)
 
     class Meta:
         db_table = 'roles'
@@ -15,7 +22,7 @@ class Roles(models.Model):
         verbose_name_plural = 'Роли'
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.fillial}"
     
 class Employee(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
@@ -29,7 +36,7 @@ class Employee(models.Model):
         verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
-        return self.fio
+        return str(f"{self.fio} | {self.id_roles}")
     
 class Clients(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
@@ -41,13 +48,19 @@ class Clients(models.Model):
         verbose_name_plural = 'Клиенты'
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
     
 class Product(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
     name = models.CharField(max_length=50, db_column='name', verbose_name='Название товара')
     price = MoneyField(max_digits=12, decimal_places=2, default_currency='RUB', db_column='price', verbose_name='Стоимость')
-    percent = models.DecimalField(max_digits=4, decimal_places=2, db_column='percent', verbose_name='Процент')
+    percent = models.DecimalField(max_digits=4, 
+                                  decimal_places=3, 
+                                  validators=[
+                                      MaxValueValidator(1.000),  # Максимальное значение
+                                      MinValueValidator(0.000),  # Минимальное значение
+                                      ],
+                                      db_column='percent', verbose_name='Процент')
     description = models.CharField(max_length=300, db_column='description', verbose_name='Описание', null=True, blank=True)
 
     class Meta:
@@ -56,7 +69,7 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
     def __str__(self):
-        return self.name
+        return f"{self.name} | Стоимость: {self.price}"
 
 class Deals(models.Model):
     STATUS_CHOICES = [
@@ -86,4 +99,4 @@ class Deals(models.Model):
         verbose_name_plural = 'Сделки'
 
     def __str__(self):
-        return self.employers_id
+        return f"Сделка {self.id}: {self.client_id} - {self.product_id} ({self.status})"
