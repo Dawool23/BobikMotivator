@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
-from motivation.views import LoginAPIView, RolesAPIView, EmployeeAPIView, ClientsAPIView, ProductAPIView, DealsAPIView
+from motivation.views import LoginAPIView, RolesAPIView, EmployeeAPIView, ClientsAPIView, ProductAPIView, DealsAPIView, PremiumAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/product', ProductAPIView.as_view(), name='product'),
     path('api/employee', EmployeeAPIView.as_view(), name='employee'),
     path('api/deals', DealsAPIView.as_view(), name='deals'),
+     path('api/premium/<int:deal_id>/', PremiumAPIView.as_view(), name='premium_api'),
 ]

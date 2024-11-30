@@ -3,19 +3,10 @@ from django.dispatch import receiver
 from .models import Deals
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from utils import calculate_premium
 
 @receiver(post_save, sender=Deals)
-def notify_sales_update(sender, instance, created, **kwargs):
-    if created:  # Новая продажа
-        channel_layer = get_channel_layer()
-        data = {
-            "message": "Новая продажа зарегистрирована!",
-            "sale_id": instance.id,
-            "sum": str(instance.sum),
-        }
-        async_to_sync(channel_layer.group_send)(
-            "sales_updates",  # Название группы WebSocket
-            {"type": "send_sales_update", "data": data}
-        )
-        # Вызов алгоритма расчета премий
-        calculate_premium()
+def handle_deal_premium(sender, instance, created, **kwargs):
+    if created:  # Если сделка создана
+        premium_result = calculate_premium(instance.id)
+        print(f"Премия рассчитана: {premium_result}")

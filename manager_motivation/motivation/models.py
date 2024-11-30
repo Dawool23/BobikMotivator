@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 from djmoney.models.fields import MoneyField
 from datetime import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -26,19 +27,19 @@ class Roles(models.Model):
     
 class Employee(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     fio = models.CharField(max_length=150, db_column='FIO', verbose_name='ФИО')
     id_roles = models.ForeignKey(Roles, on_delete=models.CASCADE, db_column='id_roles', verbose_name='Роль')
+    #hire_date = models.DateTimeField(null=True, blank=True)  # Это поле будет хранить дату найма
 
+    def get_user_date_joined(self):
+        return self.user.date_joined
+    
     class Meta:
         db_table = 'employee'
         verbose_name = 'Сотрудника'
         verbose_name_plural = 'Сотрудники'
 
-    def __str__(self):
-        #return str(f"{self.fio} | {self.id_roles}")
-        return self.fio
-    
 class Clients(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
     name = models.CharField(max_length=50, db_column='name', verbose_name='ФИО')

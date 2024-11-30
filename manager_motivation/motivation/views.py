@@ -9,7 +9,25 @@ from rest_framework import viewsets
 from .models import Roles, Employee, Clients, Product, Deals
 from .serializer import RolesSerializer, EmployeeSerializer, ClientsSerializer, ProductSerializer, DealsSerializer
 from rest_framework import generics
+from django.http import JsonResponse
+from .utils import calculate_premium
 
+
+class PremiumAPIView(APIView):
+    def get(self, request, deal_id):
+        try:
+            # Проверяем, существует ли сделка
+            deal = Deals.objects.get(id=deal_id)
+        except Deals.DoesNotExist:
+            return Response({"error": "Сделка не найдена"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Вызываем функцию расчета премии
+        result = calculate_premium(deal_id)
+        if "error" in result:
+            return Response({"error": result["error"]}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Возвращаем результат
+        return Response(result, status=status.HTTP_200_OK)
 
 class Profile(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
