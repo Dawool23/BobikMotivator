@@ -72,12 +72,12 @@ const Sidebar = () => {
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'products'}>
+					<Link className={styles.alink} to={'formaddclient'}>
 						Добавить клиента
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'clients'}>
+					<Link className={styles.alink} to={'helpinfo'}>
 						Справка о доходе
 					</Link>
 				</div>
