@@ -16,7 +16,11 @@ const Sidebar = () => {
 		<div className='sidebar'>
 			<div className='block nav'>
 				<div className={styles.link}>
-					<Link className={styles.alink} to={'achievements'}>
+					<Link
+						className={`${styles.alink}  `}
+						// ${isAuth ? styles.active : ''}
+						to={'achievements'}
+					>
 						Достижения
 					</Link>
 				</div>
