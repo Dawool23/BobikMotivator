@@ -11,6 +11,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "18081:80"
+    volumes:
+      - ./bobik-motivation-front/build/:/usr/share/nginx/html:delegated
     depends_on:
       - motivation-backend
     networks:
