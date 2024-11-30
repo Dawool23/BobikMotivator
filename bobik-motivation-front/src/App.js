@@ -6,10 +6,37 @@ import Header from './components/UI/Header/Header';
 /* import Content from './components/UI/Content/Content'; */
 import Sidebar from './components/UI/Sidebar/Sidebar';
 import Content from './components/UI/Content/Content';
-import { AuthContext } from './context';
+/* import { AuthContext } from './context'; */
 import Login from './pages/Login';
+import AuthContext, { AuthProvider } from './context/AuthContext';
 
 function App() {
+  const { isAuth } = useContext(AuthContext);
+/*   const [isAuth, setIsAuth] = useState(localStorage.getItem('auth')) */
+  return (
+/*     <AuthProvider> */
+      <BrowserRouter>
+        {
+          isAuth ? (
+            <div className="grid-container">
+              <Header />
+              <Content />
+              <Sidebar />
+            </div>
+          ) : <Login />
+        }
+      </BrowserRouter>
+  /*   </AuthProvider> */
+  );
+};
+
+export default App;
+
+
+
+
+
+/* function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem('auth'))
   return (
     <AuthContext.Provider value={{
@@ -32,6 +59,11 @@ function App() {
 };
 
 export default App;
+ */
+
+
+
+
 
 /* function App() {
   const [isAuth, setIsAuth] = useState(false)

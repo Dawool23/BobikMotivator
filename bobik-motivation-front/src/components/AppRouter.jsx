@@ -4,8 +4,9 @@ import Error from "../pages/Error";
 /*import About from '../pages/About'; */
 import {publicRoutes, privateRoutes} from "../router";
 import Login from '../pages/Login';
-import { AuthContext } from '../context';
+/* import { AuthContext } from '../context'; */
 import Achievements from '../pages/Achievements';
+import AuthContext from '../context/AuthContext';
 
 const AppRouter = () => {
   const {isAuth} = useContext(AuthContext);

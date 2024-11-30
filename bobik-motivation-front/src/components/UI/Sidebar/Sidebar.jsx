@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../../context';
+/* import { AuthContext } from '../../../context'; */
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Sidebar.module.css';
+import AuthContext from '../../../context/AuthContext';
 
 const Sidebar = () => {
 	const { isAuth, setIsAuth } = useContext(AuthContext);
