@@ -2,6 +2,7 @@
 
 networks:
   bobik-test:
+  bobik:
   
 
 services:
@@ -13,7 +14,6 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - postgres-motivation-test
       - motivation-backend-test
     networks:
       - bobik-test
@@ -26,19 +26,6 @@ services:
     command: python manage.py runserver localhost:8000
     ports:
       - "1488:8000"
-    depends_on:
-      - postgres-motivation-test
     networks:
       - bobik-test
-  
-  postgres-motivation-test:
-    image: postgres:16.6-alpine
-    restart: unless-stopped
-    ports:
-      - "15433:5432"
-    environment:
-      - POSTGRES_DB=bobik-motivator
-      - POSTGRES_USER=server
-      - POSTGRES_PASSWORD=postgres
-    networks:
-      - bobik-test
+      - bobik
