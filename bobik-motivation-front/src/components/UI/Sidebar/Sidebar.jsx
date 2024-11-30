@@ -63,21 +63,31 @@ const Sidebar = () => {
 				<div className={styles.mlink}>
 					<Link
 						className={`${styles.alink} ${
-							lastUrlSegment == 'addsale' ? styles.active : ''
+							lastUrlSegment == 'formcreatedeal' ? styles.active : ''
 						}`}
-						to={'addsale'}
-						onClick={() => setLastUrlSegment('addsale')}
+						to={'formcreatedeal'}
+						onClick={() => setLastUrlSegment('formcreatedeal')}
 					>
 						Создать сделку
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'formaddclient'}>
+					<Link className={`${styles.alink} ${
+							lastUrlSegment == 'formaddclient' ? styles.active : ''
+						}`}
+						to={'formaddclient'}
+						onClick={() => setLastUrlSegment('formaddclient')}
+					>
 						Добавить клиента
 					</Link>
 				</div>
 				<div className={styles.mlink}>
-					<Link className={styles.alink} to={'helpinfo'}>
+					<Link className={`${styles.alink} ${
+							lastUrlSegment == 'helpinfo' ? styles.active : ''
+						}`}
+						to={'helpinfo'}
+						onClick={() => setLastUrlSegment('helpinfo')}
+					>
 						Справка о доходе
 					</Link>
 				</div>
