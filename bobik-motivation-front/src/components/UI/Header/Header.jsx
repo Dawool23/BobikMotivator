@@ -66,27 +66,75 @@ const Header = () => {
 		}
 	  }, [authTokens]); */
 
-	  const { authTokens } = useContext(AuthContext); // Получаем токены из контекста
-	  const [employee, setEmployee] = useState(null); // Состояние для данных сотрудника
+
+
+/* 	  const { authTokens } = useContext(AuthContext); 
+	  const [employee, setEmployee] = useState(null); 
 
 	  useEffect(() => {
 		const fetchEmployee = async () => {
-		  if (!authTokens) return; // Если нет токенов, не делаем запрос
+		  if (!authTokens) return;
 	
 		  try {
-			// Получаем данные о сотруднике через API
 			const employeeData = await fetchData('/api/employee', authTokens.access);
 	
-			// Находим сотрудника с ролью "Менеджер"
-			const employee = employeeData.find(emp => emp.id_roles === 'Менеджер');
-			setEmployee(employee); // Устанавливаем данные сотрудника
+			const employee = employeeData.find(emp => emp.id === authTokens.user.id);
+			setEmployee(employee); 
 		  } catch (error) {
 			console.error('Ошибка при загрузке данных сотрудника:', error);
 		  }
 		};
 	
-		fetchEmployee(); // Вызываем функцию для получения данных
-	  }, [authTokens]); // Эффект зависит от authTokens
+		fetchEmployee(); 
+	  }, [authTokens]);  */
+
+
+	  const [user, setUser] = useState(() => {
+		const storedUser = localStorage.getItem("user");
+		return storedUser ? JSON.parse(storedUser) : null; // Загружаем данные из localStorage
+	  });
+	
+	  const [authTokens, setAuthTokens] = useState(() => {
+		const storedTokens = localStorage.getItem("authTokens");
+		return storedTokens ? JSON.parse(storedTokens) : null; // Загружаем токены из localStorage
+	  });
+	
+	  const [employee, setEmployee] = useState(null);
+	
+	  useEffect(() => {
+		const fetchEmployee = async () => {
+		  if (!authTokens || !user || !user.user_id) {
+			console.log("Данные пользователя:", user);
+			console.error('Отсутствуют данные пользователя или токены');
+			return;
+		  }
+	
+		  try {
+			// Получаем данные сотрудников
+			const employeeData = await fetchData('/api/employee', authTokens.access);
+			console.log("Данные сотрудников:", employeeData);
+	
+			// Ищем сотрудника по user_id
+			const foundEmployee = employeeData.find(emp => emp.user === user.user_id);
+	
+			if (foundEmployee) {
+			  setEmployee(foundEmployee);
+			} else {
+			  console.error('Сотрудник не найден');
+			}
+		  } catch (error) {
+			console.error('Ошибка при загрузке данных сотрудника:', error);
+		  }
+		};
+	
+		if (authTokens && user && user.user_id) {
+		  fetchEmployee();
+		}
+	  }, [authTokens, user]);
+	
+	  
+	  
+	  
 
 
 	return (
