@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
-from motivation.views import LoginAPIView, RolesAPIView, EmployeeAPIView, ClientsAPIView, ProductAPIView, DealsAPIView, PremiumAPIView
+from motivation.views import LoginAPIView, LogoutAPIView, RolesAPIView, EmployeeAPIView, ClientsAPIView, ProductAPIView, DealsAPIView, PremiumAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
