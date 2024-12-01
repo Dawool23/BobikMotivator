@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './styles/App.css';
 import { BrowserRouter } from 'react-router-dom';
 import Header from './components/UI/Header/Header';
@@ -8,7 +8,7 @@ import Sidebar from './components/UI/Sidebar/Sidebar';
 import Content from './components/UI/Content/Content';
 /* import { AuthContext } from './context'; */
 import Login from './pages/Login';
-import AuthContext, { AuthProvider } from './context/AuthContext';
+import AuthContext from './context/AuthContext';
 
 function App() {
   const { isAuth } = useContext(AuthContext);

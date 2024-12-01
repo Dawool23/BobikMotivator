@@ -5,18 +5,9 @@ import styles from "./FormAuthorization.module.css";
 import AuthContext from "../../../context/AuthContext";
 
 const FormAuthorization = () => {
-/*     const {isAuth, setIsAuth} = useContext(AuthContext);
-
-    const login = event => {
-        event.preventDefault();
-        setIsAuth(true);
-        localStorage.setItem('auth', 'true')
-    } */
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [isUsernameFilled, setUsernameFilled] = useState(false);
-    const [isPasswordFilled, setPasswordFilled] = useState(false);
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
@@ -28,7 +19,6 @@ const FormAuthorization = () => {
       }
   
       setUsername(value);
-      setUsernameFilled(value !== "");
   
       if (value === "") {
         setErrors((prev) => ({ ...prev, username: "Заполните поле" }));
@@ -47,7 +37,6 @@ const FormAuthorization = () => {
       }
     
       setPassword(value);
-      /* setPasswordFilled(value !== ""); */
     
       if (value === "") {
         setErrors((prev) => ({ ...prev, password: "Заполните поле" }));
@@ -64,73 +53,10 @@ const FormAuthorization = () => {
       }
     };
     
-/*     const checkUsernameInDatabase = async (username) => {
-      try {
-        const response = await fetch(`/api/check-username?username=${username}`);
-        const data = await response.json();
-        return data.exists; 
-      } catch (error) {
-        console.error("Ошибка проверки логина:", error);
-        return false; 
-      }
-    }; */
-  
-/*     const handleSubmit = async (e) => { 
-      e.preventDefault();
-      const newErrors = {};
-    
-      if (!isUsernameFilled) {
-        newErrors.username = "Заполните поле";
-      } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
-        newErrors.username = "Логин должен содержать минимум 4 символа, латинские буквы или цифры";
-      }
-    
-      if (!isPasswordFilled) {
-        newErrors.password = "Заполните поле";
-      } else {
-        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
-        if (!passwordPattern.test(password)) {
-          newErrors.password = "Пароль должен содержать минимум 8 символов, одну латинскую букву, одну цифру и один специальный символ";
-        }
-      }
-  
-      if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-      } else {
-        navigate('/achievements');
-      }
-    };
-
-    let {loginUser} = useContext(AuthContext) */
-
-    const { loginUser } = useContext(AuthContext);
-
-/*     const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      if (!username || !password || errors.username || errors.password) {
-          console.log("Поля заполнены некорректно:", { username, password, errors });
-          setErrors((prev) => ({
-              ...prev,
-              username: username ? "" : "Заполните поле",
-              password: password ? "" : "Заполните поле",
-          }));
-          return;
-      }
-  
-      console.log("Отправка данных на сервер:", { username, password });
-      const success = await loginUser({ username, password });
-  
-      if (success) {
-          console.log("Авторизация успешна, переход на страницу достижений");
-          navigate("/achievements");
-      } else {
-          console.error("Ошибка авторизации");
-      }
-  }; */
+  const { loginUser } = useContext(AuthContext);
   const { setIsAuth } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
+/*   const handleSubmit = async (e) => {
     e.preventDefault();
   
     if (!username || !password || errors.username || errors.password) {
@@ -148,14 +74,56 @@ const FormAuthorization = () => {
   
     if (success) {
         console.log("Авторизация успешна, переход на страницу достижений");
-        localStorage.setItem('auth', 'true');  // Обновляем localStorage
-        setIsAuth(true);  // Обновляем состояние
+        localStorage.setItem('auth', 'true'); 
+        setIsAuth(true); 
         navigate("/achievements");
     } else {
         console.error("Ошибка авторизации");
     }
-  };
+  }; */
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
   
+ 
+    const usernamePattern = /^[a-zA-Z0-9]{4,}$/;
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+  
+    const newErrors = {};
+  
+    if (!username) {
+      newErrors.username = "Заполните поле";
+    } else if (!usernamePattern.test(username)) {
+      newErrors.username = "Логин должен содержать минимум 4 символа, латинские буквы или цифры";
+    }
+  
+    if (!password) {
+      newErrors.password = "Заполните поле";
+    } else if (!passwordPattern.test(password)) {
+      newErrors.password =
+        "Пароль должен содержать минимум 8 символов, одну латинскую букву, одну цифру и один специальный символ";
+    }
+  
+    setErrors(newErrors);
+  
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+  
+    console.log("Отправка данных на сервер:", { username, password });
+    const success = await loginUser({ username, password });
+  
+    if (success) {
+      console.log("Авторизация успешна, переход на страницу достижений");
+      localStorage.setItem("auth", "true");
+      setIsAuth(true);
+      navigate("/achievements");
+    } else {
+      setErrors({ ...newErrors, server: "Неправильный логин или пароль!" });
+      alert("Неправильный логин или пароль!");
+    }
+  };
   
 
     return (
@@ -168,10 +136,10 @@ const FormAuthorization = () => {
                 name="username"
                 placeholder=" "
                 onChange={handleUsernameChange}
-                className={styles.input}
+                className={`${styles.input} ${errors.username ? styles.inputError : ''}`}
                 value={username}
             />
-            <label htmlFor="email" className={styles.label}>
+            <label htmlFor="username" className={styles.label}>
               Логин
             </label>
             {errors.username && <span className={styles.errorMessage}>{errors.username}</span>}
@@ -182,7 +150,7 @@ const FormAuthorization = () => {
                 name="password"
                 placeholder=" "
                 onChange={handlePasswordChange} 
-                className={styles.input}
+                className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
                 value={password}
             />
             <label htmlFor="password" className={styles.label}>

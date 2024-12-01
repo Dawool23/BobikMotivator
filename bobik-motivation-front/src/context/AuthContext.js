@@ -47,8 +47,10 @@
     );
 };
  */
-import React, { createContext, useState } from 'react';
-/* import { loginUser as apiLoginUser } from './api'; // импортируем функцию loginUser из api.js */
+
+
+
+/* import React, { createContext, useState } from 'react';
 import { loginUser as apiLoginUser } from '../API/API';
 
 const AuthContext = createContext();
@@ -64,20 +66,19 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async ({ username, password }) => {
     try {
-      const data = await apiLoginUser(username, password); // Используем функцию из api.js
+      const data = await apiLoginUser(username, password); 
+      console.log("Ответ API:", data);
 
       if (data && data.access) {
         setAuthTokens(data);
         setUser(data.access);
         localStorage.setItem("authTokens", JSON.stringify(data));
         setIsAuth(true);
-        return true; // Успешный вход
+        return true; 
       } else {
-        alert("Неправильный логин или пароль!");
-        return false; // Ошибка входа
+        return false; 
       }
     } catch (error) {
-      console.error("Ошибка авторизации:", error);
       return false;
     }
   };
@@ -88,3 +89,53 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+ */
+
+import React, { createContext, useState } from 'react';
+import { loginUser as apiLoginUser } from '../API/API';
+import { jwtDecode } from 'jwt-decode';
+
+const AuthContext = createContext();
+
+export default AuthContext;
+
+export const AuthProvider = ({ children }) => {
+  const [authTokens, setAuthTokens] = useState(
+    JSON.parse(localStorage.getItem('authTokens')) || null
+  );
+  const [user, setUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('auth') === 'true');
+
+  const loginUser = async ({ username, password }) => {
+    try {
+      const data = await apiLoginUser(username, password);
+      console.log("Ответ API:", data);
+
+      if (data && data.access) {
+        setAuthTokens(data);
+
+        // Декодируем токен и устанавливаем данные пользователя
+        const decodedUser = jwtDecode(data.access);
+        console.log("Декодированные данные пользователя:", decodedUser); // Логирование данных
+        setUser(decodedUser);  // Устанавливаем данные пользователя
+
+        localStorage.setItem("authTokens", JSON.stringify(data));
+        setIsAuth(true);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Ошибка при авторизации", error);
+      return false;
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuth, authTokens, user, loginUser, setIsAuth, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+

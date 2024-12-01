@@ -11,7 +11,7 @@ const apiClient = axios.create({
   });
 
 // Функция для выполнения POST-запроса на логин
-export const loginUser = async (username, password) => {
+ export const loginUser = async (username, password) => {
   try {
     const response = await axios.post(`${API_URL}/api/login`, {
       username,
@@ -22,11 +22,11 @@ export const loginUser = async (username, password) => {
     console.error("Ошибка при авторизации:", error);
     throw error;
   }
-};
+}; 
 
 
 // Универсальная функция для выполнения запросов
-export const fetchData = async (endpoint, authToken) => {
+ export const fetchData = async (endpoint, authToken) => {
     try {
       const response = await apiClient.get(endpoint, {
         headers: {
@@ -38,21 +38,5 @@ export const fetchData = async (endpoint, authToken) => {
       console.error(`Ошибка при загрузке данных с ${endpoint}:`, error);
       throw error;
     }
-  };
-
-
-
-/* export const fetchData = async (url, authToken) => {
-  try {
-    const response = await axios.get(process.env.REACT_APP_API_URL + url, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error(`Ошибка при загрузке данных с ${url}:`, error);
-    throw error; 
-  }
-}; */
+  }; 
+  
