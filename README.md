@@ -173,8 +173,52 @@
 
 **Примеры ответа:**
 
+```json
+[
+    {
+        "id": 18,
+        "user": 8,
+        "id_roles": "Менеджер",
+        "fio": "Борисова Дарья Константиновна",
+        "fillial": "1"
+    },
+    {
+        "id": 17,
+        "user": 9,
+        "id_roles": "Генеральный директор",
+        "fio": "Губанов Роман Макарович",
+        "fillial": null
+    }
+]
+```
+
 ### GET api/deals
 
 **Примеры ответа:**
+
+```json
+[
+    {
+        "id": 10,
+        "product_id": "Kia Seltos",
+        "employers_id": "Employee object (2)",
+        "client_id": "Захарова Полина Викторовна",
+        "date": "2024-11-30T13:44:01",
+        "payment_type": "Наличные",
+        "sum": "4000000.00",
+        "status": "Завершено"
+    },
+    {
+        "id": 11,
+        "product_id": "BMW 330i xDrive",
+        "employers_id": "Employee object (2)",
+        "client_id": "Розанова Виктория Олеговна",
+        "date": "2024-11-30T14:02:57",
+        "payment_type": "Кредит",
+        "sum": "5000000.00",
+        "status": "Завершено"
+    }
+]
+```
 
 ## Frontend
