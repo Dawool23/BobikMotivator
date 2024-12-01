@@ -4,3 +4,5 @@ __pycache__/
 /venv
 database/
 docker-compose-test.yml
+
+.env
